@@ -1,0 +1,23 @@
+{
+  "name": "finance",
+  "version": "1.0.0",
+  "description": "API for handling finances",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Angelo-Bruno/finance.git"
+  },
+  "keywords": [
+    "finance",
+    "API"
+  ],
+  "author": "Bruno Angelo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Angelo-Bruno/finance/issues"
+  },
+  "homepage": "https://github.com/Angelo-Bruno/finance#readme"
+}

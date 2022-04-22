@@ -4,6 +4,7 @@
   "description": "API for handling finances",
   "main": "app.js",
   "scripts": {
+    "dev": "nodemon src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +20,14 @@
   "bugs": {
     "url": "https://github.com/Angelo-Bruno/finance/issues"
   },
-  "homepage": "https://github.com/Angelo-Bruno/finance#readme"
+  "homepage": "https://github.com/Angelo-Bruno/finance#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "sequelize": "^6.19.0",
+    "sequelize-cli": "^6.4.1",
+    "sqlite3": "^5.0.4"
+  }
 }

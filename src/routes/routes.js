@@ -1,17 +1,10 @@
 const express = require('express')
-
+const IncomeController = require('../controller/IncomeController')
 routes = express.Router()
-routes.get('/api/dashboard', (req, res)=>{
-    res.json()
-})
 
-routes.post('/api/dashboard', (req, res)=>{
-    const {title} = req.body;
-    const {price} = req.body
+routes.get('/api/income', IncomeController.index)
+routes.post('/api/income', IncomeController.store)
 
-    
-    
-})
 
 
 module.exports = routes

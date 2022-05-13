@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   "homepage": "https://github.com/Angelo-Bruno/finance#readme",
   "dependencies": {
     "dotenv": "^16.0.0",
+    "jest": "^28.0.3",
     "nodemon": "^2.0.15"
   },
   "devDependencies": {

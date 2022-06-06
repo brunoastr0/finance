@@ -8,8 +8,7 @@ class Income extends Model {
         income_amount: DataTypes.INTEGER,
         income_date: DataTypes.DATE,
       },
-      { sequelize,
-    tableName: "user_income" }
+      { sequelize, tableName: "user_income" }
     );
   }
 }

@@ -10,15 +10,15 @@ module.exports = {
         autoIncrement: true,
         allowNull: false
       },
-      income_amount :{
+      outcome_amount :{
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      income_description: {
+      outcome_description: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      date: {
+      outcome_date: {
         type: Sequelize.STRING,
         allowNull: false
       },

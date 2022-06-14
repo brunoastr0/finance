@@ -12,6 +12,7 @@ module.exports = {
         const {income_source, income_amount, income_date} = req.body;
 
         const income = await UserIncome.create({income_source, income_amount, income_date})
+        
         return res.json(income)
     }
 }

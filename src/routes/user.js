@@ -11,9 +11,8 @@ routes.post('/api/register', userController.register)
 routes.post('/api/login', userController.login)
 
 routes.get('/api/home/:id', auth, async (req, res) => {
-
     const user = await User.findOne({ where: { email: req.user.email } })
-    res.json(req.user)
+    res.json(user)
 })
 
 /**Balance */

@@ -1,5 +1,6 @@
 
 const { Model, DataTypes } = require("sequelize")
+const userBalanceController = require('../controller/BalanceController')
 
 class User extends Model {
     static init(sequelize) {
@@ -10,9 +11,14 @@ class User extends Model {
             password: DataTypes.STRING
         }, { sequelize, tableName: 'user' ,
     hooks: {
-        afterCreate: (user, options)=>{
-            console.log("New User create")
-            console.log(user)
+        afterCreate: async (user, options)=>{
+            const balance = {
+                amount: 0,
+                userId:user.id
+            }
+            console.log(userBalanceController.create(balance))
+
+          
         }
     }})
     }

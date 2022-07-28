@@ -1,22 +1,24 @@
 const {Model, DataTypes} = require("sequelize");
 
-class Balance extends Model{
+class Transaction extends Model{
     static init(sequelize){
         super.init(
             {
-                balance_amount: DataTypes.INTEGER,
                 userId: {
                     type:DataTypes.INTEGER,
                     references:{
                         model:"user",
                         key:"id"
                     }
-                }
+                },
+                transaction_type: DataTypes.ENUM("INCOME, OUTCOME"),
+                amount: DataTypes.INTEGER,
+                balance: DataTypes.INTEGER
                
             },
-            {sequelize, tableName:"user_balance"}
+            {sequelize, tableName:"user_tansactions"}
         )
     }
 }
 
-module.exports = Balance
+module.exports = Transaction

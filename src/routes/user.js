@@ -1,25 +1,20 @@
 const express = require('express')
-// const IncomeController = require('../controller/IncomeController')
-// const OutcomeController = require('../controller/OutcomeController')
 const BalanceController = require('../controller/BalanceController')
-const userController = require('../controller/UserController')
-const auth = require('../middleware/auth')
+const authMiddleware = require('../middleware/auth')
 const User = require('../models/UserSchema')
-routes = express.Router()
-/**User */
-routes.post('/api/register', userController.register)
-routes.post('/api/login', userController.login)
+user = express.Router()
 
-routes.get('/api/home/:id', auth, async (req, res) => {
+/**User */
+
+user.get('/api/me', authMiddleware, async (req, res) => {
+
     const user = await User.findOne({ where: { email: req.user.email } })
-    res.json(user)
+    res.json(req.user)
 })
 
-/**Balance */
-routes.get('/api/balance', BalanceController.index)
 
 
 
 
 
-module.exports = routes
+module.exports = user

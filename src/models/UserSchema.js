@@ -9,18 +9,20 @@ class User extends Model {
             last_name: DataTypes.STRING,
             email: DataTypes.STRING,
             password: DataTypes.STRING
-        }, { sequelize, tableName: 'user' ,
-    hooks: {
-        afterCreate: async (user, options)=>{
-            const balance = {
-                amount: 0,
-                userId:user.id
-            }
-            const balancePromise = await userBalanceController.create(balance)
+        }, {
+            sequelize, tableName: 'user',
+            hooks: {
+                afterCreate: async (user, options) => {
+                    const balance = {
+                        amount: 0,
+                        userId: user.id
+                    }
+                    await userBalanceController.create(balance)
 
-          
-        }
-    }})
+
+                }
+            }
+        })
     }
 }
 

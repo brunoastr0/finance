@@ -2,35 +2,35 @@ const ApiError = require('../error/ApiError');
 const UserBalance = require('../models/UserBalance');
 const User = require('../models/UserSchema');
 const Transaction = require('../models/UserTransactions');
+const { v4: uuid } = require("uuid");
+
 
 module.exports = {
 
 
-    async registerTransactions(req, res, next) {
+    async registerTransactions(req, res, next, userId) {
         try {
-            const { userId, type, amount } = req.body;
-
-            const userExists = await User.findOne({ where: { userId: userId } })
+            const { type, amount } = req.body;
+            console.log(userId)
+            const userExists = await User.findOne({ where: { id: userId } })
             if (!userExists) {
                 next(ApiError.notFound(`user not found`))
             }
 
-            const oldBalance = await User.findOne({ where: { userId: userId } })
+            const oldBalance = await UserBalance.findOne({ where: { userId: userId } })
             if (!oldBalance) {
                 next(ApiError.internal(`user balance does not exists`))
 
             }
 
-            balance = oldBalance.balance_amount + amount ? type === 'INCOME' : oldBalance.balance_amount - amount
-
+            balance = type === 'INCOME' ? oldBalance.balance_amount + amount : oldBalance.balance_amount - amount
+            console.log(balance)
             const transactionJSON = {
+                id: uuid(),
                 userId: userId,
                 transactions_type: type,
                 amount: amount,
-                balance: balance,
-                createdAt: new Date(),
-                updatedAt: new Date()
-
+                balance: balance
             }
 
             const transaction = await Transaction.create(transactionJSON)
@@ -45,5 +45,21 @@ module.exports = {
 
 
 
+    },
+
+    async findUserTransaction(req, res, next, userId) {
+        try {
+
+            const transactions = await Transaction.findAll({ where: { userId: userId } })
+            if(!transactions){
+                next(ApiError.notFound(`User transacttions not found`))
+                return;
+            }
+
+            res.status(200).json(transactions)
+
+        } catch (error) {
+            next(error)
+        }
     }
 }

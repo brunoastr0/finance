@@ -9,8 +9,7 @@ auth.post('/api/register', authController.register)
 auth.post('/api/login', authController.login)
 
 
-/**Balance */
-auth.get('/api/balance', BalanceController.index)
+
 
 
 

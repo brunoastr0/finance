@@ -16,7 +16,7 @@ class User extends Model {
                 amount: 0,
                 userId:user.id
             }
-            console.log(userBalanceController.create(balance))
+            const balancePromise = await userBalanceController.create(balance)
 
           
         }

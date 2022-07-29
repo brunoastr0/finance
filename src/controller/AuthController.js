@@ -49,7 +49,7 @@ module.exports = {
             res.status(201).json(user)
             res.redirect('/api/login')
         } catch (err) {
-           next(err)
+            next(err)
 
         }
     },
@@ -73,7 +73,10 @@ module.exports = {
                     }
                 )
                 user.token = token
-                return res.status(200).json({'access-token': token})
+                return res.status(200).json({
+                    user_id: user.id,
+                    'access-token': token
+                })
 
             }
             next(ApiError.badRequest('Invalid credentials'))

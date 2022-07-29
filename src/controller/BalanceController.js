@@ -1,14 +1,22 @@
 const UserBalance = require('../models/UserBalance')
 const { v4: uuid } = require("uuid");
+const ApiError = require('../error/ApiError')
 
 
 module.exports = {
-    async index(req, res) {
+    async userBalance (req, res, next, userId) {
+            try {
+                if(userId === undefined){
+                    next(ApiError.badRequest('userId missing'))
+                    return;
+                }
+                const balance = await UserBalance.findOne({where:{userId: userId}})
+                res.json(balance)
+            } catch (error) {
+                next(error)
 
-        const balance = await UserBalance.findAll({})
-        return res.json(balance)
-
-    },
+            }
+        },
 
     async create(balancejson) {
 
@@ -17,13 +25,18 @@ module.exports = {
         try {
             const { amount, userId } = balancejson
 
+            const balanceExist = await UserBalance.findOne({ where: { userId: userId } })
+
+            if (balanceExist) {
+                return ApiError.conflict(`Balance table already exists`)
+            }
+
             balance_vars = {
                 id: uuid(),
                 balance_amount: amount,
-                userId: userId,
-               
+                userId: userId
             }
-            console.log(balance_vars)
+
 
             const balance = await UserBalance.create(balance_vars);
             return balance

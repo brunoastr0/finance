@@ -4,8 +4,8 @@
   "description": "API for handling finances",
   "main": "app.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js",
+    "start": "node src/server.js",
+    "dev": "nodemon --trace-deprecation src/server.js",
     "test": "jest"
   },
   "repository": {

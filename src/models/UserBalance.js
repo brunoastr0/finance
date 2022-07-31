@@ -5,6 +5,7 @@ class Balance extends Model{
         super.init(
             {
                 balance_amount: DataTypes.INTEGER,
+                balance_remain: DataTypes.INTEGER,
                 userId: {
                     type:DataTypes.INTEGER,
                     references:{

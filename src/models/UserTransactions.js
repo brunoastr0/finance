@@ -29,13 +29,14 @@ class Transaction extends Model {
                         const oldBalance = await UserBalance.findOne({ where: { userId: userId } })
                         if (!oldBalance) {
                             next(ApiError.internal(`user balance does not exists`))
-
                         }
                         const balanceAfter = transactions_type === 'INCOME'? oldBalance.balance_amount + amount  : oldBalance.balance_amount - amount
 
                         const balanceJSON = {
                             userId: userId,
-                            balance_amount: balanceAfter
+                            balance_amount: balanceAfter,
+
+                            balance_remain: balanceAfter
                         }
                         await UserBalance.update(balanceJSON, { where: { userId: userId } })
 

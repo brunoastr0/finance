@@ -4,7 +4,7 @@ const dbConfig = {
     username: 'postgres',
     password: 'postgres',
     database: 'finance_api',
-    logging: false,
+    logging: true,
     define: {
         timestamps: true,
         underscored: true,

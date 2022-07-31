@@ -2,7 +2,7 @@ const User = require('../models/UserSchema');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { v4: uuid } = require("uuid");
-const ApiError = require('../error/ApiError');
+const ApiError = require('../middleware/error/ApiError');
 
 
 module.exports = {
@@ -27,9 +27,9 @@ module.exports = {
             //user
             const json = {
                 id: uuid(),
-                first_name: first_name.toLowerCase(),
-                last_name: last_name.toLowerCase(),
-                email: email.toLowerCase(),
+                first_name: first_name.toUpperCase(),
+                last_name: last_name.toUpperCase(),
+                email: email.toUpperCase(),
                 password: encryptedPassword
             }
 

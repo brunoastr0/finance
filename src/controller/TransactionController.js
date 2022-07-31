@@ -1,8 +1,9 @@
-const ApiError = require('../error/ApiError');
+const ApiError = require('../middleware/error/ApiError');
 const UserBalance = require('../models/UserBalance');
 const User = require('../models/UserSchema');
 const Transaction = require('../models/UserTransactions');
 const { v4: uuid } = require("uuid");
+const { Op } = require('sequelize')
 
 
 module.exports = {
@@ -20,11 +21,25 @@ module.exports = {
             const oldBalance = await UserBalance.findOne({ where: { userId: userId } })
             if (!oldBalance) {
                 next(ApiError.internal(`user balance does not exists`))
+                return;
 
             }
 
-            balance = type === 'INCOME' ? oldBalance.balance_amount + amount : oldBalance.balance_amount - amount
-            console.log(balance)
+            var balance = 0
+            if (type === 'INCOME') {
+                balance = oldBalance.balance_amount + amount
+            } else if (type === 'OUTCOME') {
+                if (oldBalance.balance_amount < amount) {
+                    next(ApiError.unauthorizedRequest(`amount reamining not enough`))
+                    return;
+                }
+
+                balance = oldBalance.balance_amount - amount
+
+
+            }
+
+
             const transactionJSON = {
                 id: uuid(),
                 userId: userId,
@@ -32,6 +47,8 @@ module.exports = {
                 amount: amount,
                 balance: balance
             }
+
+
 
             const transaction = await Transaction.create(transactionJSON)
 
@@ -51,7 +68,34 @@ module.exports = {
         try {
 
             const transactions = await Transaction.findAll({ where: { userId: userId } })
-            if(!transactions){
+            if (!transactions) {
+                next(ApiError.notFound(`User transacttions not found`))
+                return;
+            }
+
+            res.status(200).json(transactions)
+
+        } catch (error) {
+            next(error)
+        }
+    },
+
+
+    async findUserTransactionByDate(req, res, next, userId) {
+        try {
+
+            const { start_date, end_date } = req.body
+
+            const transactions = await Transaction.findAll({
+                where: {
+                    userId: userId,
+                    created_at: {
+                        [Op.between]: [require('moment')(start_date).format('YYYY-MM-DD'), 
+                        require('moment')(end_date).format('YYYY-MM-DD')] //12h
+                    }
+                }
+            })
+            if (!transactions) {
                 next(ApiError.notFound(`User transacttions not found`))
                 return;
             }

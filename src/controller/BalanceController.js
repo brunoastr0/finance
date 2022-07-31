@@ -1,6 +1,6 @@
 const UserBalance = require('../models/UserBalance')
 const { v4: uuid } = require("uuid");
-const ApiError = require('../error/ApiError')
+const ApiError = require('../middleware/error/ApiError');
 
 
 module.exports = {
@@ -34,6 +34,7 @@ module.exports = {
             balance_vars = {
                 id: uuid(),
                 balance_amount: amount,
+                balance_remain: amount,
                 userId: userId
             }
 

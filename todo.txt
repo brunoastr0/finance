@@ -1,0 +1,3 @@
+
+ - check if user can make an outcome (Jul 29 13:14)
+
